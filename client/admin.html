@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Torneo</title>
+
+<style>
+body {
+  font-family: Arial;
+  background: #1A1816;
+  color: white;
+  padding: 1rem;
+}
+
+select, input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: #E8601A;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.quarti {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+}
+
+h2 {
+  margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+    <div id="login">
+        <h2>Admin Login</h2>
+        <input type="password" id="pwd" placeholder="Password">
+        <button onclick="login()">Entra</button>
+    </div>
+
+    <div id="panel" style="display:none;">
+        <h1>Admin Torneo</h1>
+
+        <select id="partitaSelect"></select>
+
+        <h2>Punteggio finale</h2>
+        <input type="number" id="casa" placeholder="Punti casa">
+        <input type="number" id="ospite" placeholder="Punti ospite">
+
+        <h2>Quarti</h2>
+        <div class="quarti" id="quarti"></div>
+
+        <button onclick="salva()">SALVA</button>
+    </div>
+
+
+<script>
+const API = "https://torneominibasket-production.up.railway.app";
+
+let partite = [];
+
+async function login() {
+  const pwd = document.getElementById("pwd").value;
+
+  if (pwd.trim() === "cuneo2026") {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("panel").style.display = "block";
+    carica(); // avvia admin
+  } else {
+    alert("Password sbagliata");
+  }
+}
+
+async function carica() {
+  const res = await fetch(API + "/api/partite");
+  partite = await res.json();
+
+  const select = document.getElementById("partitaSelect");
+
+  partite.forEach(p => {
+    const opt = document.createElement("option");
+    opt.value = p.id;
+    opt.textContent = `${p.squadraCasa} vs ${p.squadraOspite}`;
+    select.appendChild(opt);
+  });
+
+  select.addEventListener("change", caricaPartita);
+  creaQuarti();
+}
+
+function creaQuarti() {
+  const container = document.getElementById("quarti");
+  container.innerHTML = "";
+
+  for (let i = 0; i < 6; i++) {
+    container.innerHTML += `
+      <input type="number" id="casa${i}" placeholder="Casa Q${i+1}">
+      <input type="number" id="ospite${i}" placeholder="Ospite Q${i+1}">
+    `;
+  }
+}
+
+function caricaPartita() {
+  const id = document.getElementById("partitaSelect").value;
+  const p = partite.find(x => x.id == id);
+
+  document.getElementById("casa").value = p.puntiCasa ?? "";
+  document.getElementById("ospite").value = p.puntiOspiti ?? "";
+
+  p.quarti.forEach((q, i) => {
+    if (!q) return;
+    document.getElementById("casa"+i).value = q.casa ?? "";
+    document.getElementById("ospite"+i).value = q.ospite ?? "";
+  });
+}
+
+async function salva() {
+  const id = document.getElementById("partitaSelect").value;
+
+  const puntiCasa = parseInt(document.getElementById("casa").value);
+  const puntiOspiti = parseInt(document.getElementById("ospite").value);
+
+  const quarti = [];
+
+  for (let i = 0; i < 6; i++) {
+    quarti.push({
+      casa: parseInt(document.getElementById("casa"+i).value) || 0,
+      ospite: parseInt(document.getElementById("ospite"+i).value) || 0
+    });
+  }
+
+  await fetch(API + "/api/partite/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      puntiCasa,
+      puntiOspiti,
+      quarti
+    })
+  });
+
+  alert("Salvato!");
+}
+
+carica();
+</script>
+
+</body>
+</html>
