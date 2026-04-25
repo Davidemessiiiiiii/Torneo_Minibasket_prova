@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7° Torneo "Città di Cuneo"</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #E8601A;
+      --dark: #1A1816;
+      --dark2: #2C2926;
+      --mid: #3D3830;
+      --light: #F5F0E8;
+      --muted: #9A9088;
+      --white: #FFFFFF;
+    }
+
+    body { font-family: 'Barlow', sans-serif; background: var(--dark); color: var(--light); min-height: 100vh; }
+
+    header { background: var(--dark2); border-bottom: 3px solid var(--orange); padding: 0 2rem; }
+
+    .header-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; gap: 1.5rem; padding: 1.2rem 0;
+    }
+
+    .logo { width: 56px; height: 56px; flex-shrink: 0; }
+
+    .header-text h1 {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 2rem; letter-spacing: 0.02em; color: var(--white); line-height: 1;
+    }
+
+    .header-text p { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .tabs { background: var(--dark2); border-bottom: 1px solid var(--mid); }
+    .tabs-inner { max-width: 1100px; margin: 0 auto; display: flex; }
+
+    .tab-btn {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--muted); background: none; border: none;
+      border-bottom: 3px solid transparent; padding: 1rem 1.5rem;
+      cursor: pointer; transition: color 0.2s, border-color 0.2s;
+    }
+    .tab-btn:hover { color: var(--light); }
+    .tab-btn.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+    main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* FILTRI */
+    .filtri { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
+    .filtri-row { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
+    .filtri-label {
+      font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); min-width: 60px;
+    }
+
+    .filter-btn {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
+      color: var(--muted); background: var(--dark2);
+      border: 1px solid var(--mid); border-radius: 6px;
+      padding: 0.4rem 1rem; cursor: pointer; transition: all 0.15s;
+    }
+    .filter-btn:hover { color: var(--light); border-color: var(--muted); }
+    .filter-btn.active { color: var(--white); background: var(--orange); border-color: var(--orange); }
+
+    /* CLASSIFICA */
+    .classifica-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .classifica-table thead tr { background: var(--mid); }
+    .classifica-table th {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); padding: 0.75rem 1rem; text-align: center;
+    }
+    .classifica-table th:first-child { text-align: left; padding-left: 1.5rem; }
+    .classifica-table tbody tr { border-bottom: 1px solid var(--mid); transition: background 0.15s; }
+    .classifica-table tbody tr:hover { background: var(--dark2); }
+    .classifica-table td { padding: 0.9rem 1rem; text-align: center; color: var(--light); }
+    .classifica-table td:first-child { text-align: left; padding-left: 1.5rem; }
+
+    .pos-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 50%;
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 0.9rem; margin-right: 0.75rem; flex-shrink: 0;
+    }
+    .pos-1 { background: var(--orange); color: var(--white); }
+    .pos-2, .pos-3 { background: var(--mid); color: var(--light); }
+    .pos-other { background: transparent; color: var(--muted); border: 1px solid var(--mid); }
+    .squadra-nome { font-weight: 600; display: flex; align-items: center; }
+    .punti-cell { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--orange); }
+
+    /* PARTITE */
+    .partite-list { display: flex; flex-direction: column; gap: 0.75rem; }
+
+    .giorno-header {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 1rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); padding: 1.25rem 0 0.4rem;
+      border-bottom: 1px solid var(--mid); margin-bottom: 0.25rem;
+    }
+
+    .partita-card {
+      background: var(--dark2); border: 1px solid var(--mid); border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: grid; grid-template-columns: 1fr auto 1fr;
+      align-items: center; gap: 1rem;
+    }
+    .partita-card.giocata { border-left: 3px solid var(--orange); }
+    .partita-card.da-definire { opacity: 0.55; }
+
+    .squadra-home { text-align: right; }
+    .squadra-away { text-align: left; }
+    .squadra-home, .squadra-away {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 700;
+      font-size: 1.05rem; letter-spacing: 0.02em; color: var(--white);
+    }
+    .da-definire .squadra-home,
+    .da-definire .squadra-away { color: var(--muted); font-style: italic; }
+
+    .risultato-center { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+
+    .score { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.6rem; color: var(--orange); letter-spacing: 0.05em; }
+    .score.pending { font-size: 1.2rem; color: var(--muted); }
+
+    .orario-meta { font-size: 0.72rem; color: var(--muted); text-align: center; letter-spacing: 0.03em; }
+
+    .girone-badge {
+      font-size: 0.68rem; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--orange); background: rgba(232,96,26,0.12);
+      border-radius: 4px; padding: 0.15rem 0.5rem; display: inline-block;
+    }
+
+    .stato { text-align: center; color: var(--muted); padding: 3rem 0; font-size: 0.95rem; }
+    .spinner {
+      width: 32px; height: 32px; border: 3px solid var(--mid);
+      border-top-color: var(--orange); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 1rem;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── MOBILE ─────────────────────────────────────────────── */
+    @media (max-width: 600px) {
+      /* Header: logo più piccolo, titolo su una riga */
+      header { padding: 0 1rem; }
+      .header-inner { gap: 0.9rem; padding: 0.9rem 0; }
+      .logo { width: 38px; height: 38px; }
+      .header-text h1 { font-size: 1.25rem; }
+      .header-text p { font-size: 0.72rem; }
+
+      /* Tab */
+      .tab-btn { padding: 0.8rem 1rem; font-size: 0.9rem; }
+
+      /* Main padding */
+      main { padding: 1rem 0.75rem; }
+
+      /* Filtri: bottoni più compatti, niente wrap brutto */
+      .filtri { margin-bottom: 1.25rem; }
+      .filtri-row { gap: 0.4rem; }
+      .filtri-label { font-size: 0.7rem; min-width: 50px; }
+      .filter-btn { font-size: 0.78rem; padding: 0.35rem 0.7rem; }
+
+      /* Classifica: nascondi colonne secondarie, tieni solo le essenziali */
+      .classifica-table { font-size: 0.85rem; }
+      .classifica-table th,
+      .classifica-table td { padding: 0.7rem 0.4rem; }
+      .classifica-table th:first-child,
+      .classifica-table td:first-child { padding-left: 0.75rem; }
+
+      /* Nascondi PF, PS, +/- su mobile — restano G V P Pts */
+      .col-pf, .col-ps, .col-diff { display: none; }
+
+      /* Pallino posizione più piccolo */
+      .pos-num { width: 22px; height: 22px; font-size: 0.75rem; margin-right: 0.5rem; }
+      .punti-cell { font-size: 1rem; }
+
+      /* Calendario: squadre più piccole */
+      .squadra-home, .squadra-away { font-size: 0.88rem; }
+      .partita-card { padding: 0.75rem 0.75rem; gap: 0.5rem; }
+      .score { font-size: 1.3rem; }
+      .orario-meta { font-size: 0.65rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <svg class="logo" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="28" cy="28" r="26" stroke="#E8601A" stroke-width="2.5"/>
+      <path d="M28 2 Q28 28 28 54" stroke="#E8601A" stroke-width="2"/>
+      <path d="M2 28 Q28 28 54 28" stroke="#E8601A" stroke-width="2"/>
+      <path d="M8 12 Q28 28 48 44" stroke="#E8601A" stroke-width="1.5"/>
+      <path d="M8 44 Q28 28 48 12" stroke="#E8601A" stroke-width="1.5"/>
+    </svg>
+    <div class="header-text">
+      <h1>7° Torneo "Città di Cuneo"</h1>
+      <p>Risultati e classifiche in tempo reale</p>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <div class="tabs-inner">
+    <button class="tab-btn active" data-tab="classifica">Classifica</button>
+    <button class="tab-btn" data-tab="calendario">Calendario</button>
+  </div>
+</div>
+
+<main>
+
+  <!-- CLASSIFICA -->
+  <div class="tab-panel active" id="tab-classifica">
+    <div class="filtri">
+      <div class="filtri-row">
+        <span class="filtri-label">Girone</span>
+        <button class="filter-btn active" data-girone-cl="0">Girone A</button>
+        <button class="filter-btn" data-girone-cl="1">Girone B</button>
+      </div>
+    </div>
+    <div id="classifica-container">
+      <div class="stato"><div class="spinner"></div>Caricamento...</div>
+    </div>
+  </div>
+
+  <!-- CALENDARIO -->
+  <div class="tab-panel" id="tab-calendario">
+    <div class="filtri">
+      <div class="filtri-row">
+        <span class="filtri-label">Girone</span>
+        <button class="filter-btn active" data-girone-cal="tutte">Tutte</button>
+        <button class="filter-btn" data-girone-cal="A">Girone A</button>
+        <button class="filter-btn" data-girone-cal="B">Girone B</button>
+      </div>
+      <div class="filtri-row">
+        <span class="filtri-label">Giorno</span>
+        <button class="filter-btn active" data-giorno="tutti">Tutti</button>
+        <button class="filter-btn" data-giorno="ven">Venerdì</button>
+        <button class="filter-btn" data-giorno="sab">Sabato</button>
+        <button class="filter-btn" data-giorno="dom">Domenica</button>
+      </div>
+    </div>
+    <div id="calendario-container">
+      <div class="stato"><div class="spinner"></div>Caricamento...</div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const API = 'https://torneominibasket-production.up.railway.app';
+
+  let datiGironi = [];
+  let datiPartite = [];
+  let gironeClassifica = 0;
+  let gironeCalendario = 'tutte';
+  let giornoCalendario = 'tutti';
+
+  async function caricaDati() {
+    try {
+      const [resG, resP] = await Promise.all([
+        fetch(`${API}/api/gironi`),
+        fetch(`${API}/api/partite`)
+      ]);
+      datiGironi = await resG.json();
+      datiPartite = await resP.json();
+      renderClassifica();
+      renderCalendario();
+    } catch (e) {
+      document.getElementById('classifica-container').innerHTML = '<div class="stato">Impossibile connettersi al server.</div>';
+      document.getElementById('calendario-container').innerHTML = '<div class="stato">Impossibile connettersi al server.</div>';
+    }
+  }
+
+  // ── CLASSIFICA ──────────────────────────────────────────────
+  function calcolaClassifica(girone) {
+    const squadre = girone.squadre.map(nome => ({ nome, g:0, v:0, p:0, pf:0, ps:0, pts:0 }));
+    const lettera = girone.nome.slice(-1);
+    datiPartite.filter(p => p.girone === lettera && p.giocata).forEach(p => {
+      const casa   = squadre.find(s => s.nome === p.squadraCasa);
+      const ospite = squadre.find(s => s.nome === p.squadraOspite);
+      if (!casa || !ospite) return;
+      casa.g++; ospite.g++;
+      casa.pf += p.puntiCasa; casa.ps += p.puntiOspiti;
+      ospite.pf += p.puntiOspiti; ospite.ps += p.puntiCasa;
+      if (p.puntiCasa > p.puntiOspiti) {
+        casa.v++; casa.pts += 2; ospite.p++; ospite.pts += 1;
+      } else {
+        ospite.v++; ospite.pts += 2; casa.p++; casa.pts += 1;
+      }
+    });
+    return squadre.sort((a, b) => b.pts - a.pts || (b.pf - b.ps) - (a.pf - a.ps));
+  }
+
+  function renderClassifica() {
+    const girone = datiGironi[gironeClassifica];
+    if (!girone) return;
+    const cl = calcolaClassifica(girone);
+    const rows = cl.map((s, i) => {
+      const pc = i === 0 ? 'pos-1' : i === 1 ? 'pos-2' : i === 2 ? 'pos-3' : 'pos-other';
+      const diff = s.pf - s.ps;
+      return `<tr>
+        <td><div class="squadra-nome"><span class="pos-num ${pc}">${i+1}</span>${s.nome}</div></td>
+        <td>${s.g}</td><td>${s.v}</td><td>${s.p}</td>
+        <td class="col-pf">${s.pf}</td><td class="col-ps">${s.ps}</td>
+        <td class="col-diff">${diff > 0 ? '+'+diff : diff}</td>
+        <td class="punti-cell">${s.pts}</td>
+      </tr>`;
+    }).join('');
+    document.getElementById('classifica-container').innerHTML = `
+      <table class="classifica-table">
+        <thead><tr>
+          <th>Squadra</th><th>G</th><th>V</th><th>P</th>
+          <th class="col-pf">PF</th><th class="col-ps">PS</th><th class="col-diff">+/-</th><th>Pts</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  // ── CALENDARIO ──────────────────────────────────────────────
+  function giornoPartita(p) {
+    const o = p.orario || '';
+    if (o.startsWith('Ven')) return 'ven';
+    if (o.startsWith('Sab')) return 'sab';
+    if (o.startsWith('Dom')) return 'dom';
+    return '';
+  }
+
+  function renderCalendario() {
+    let partite = [...datiPartite];
+    if (gironeCalendario !== 'tutte') partite = partite.filter(p => p.girone === gironeCalendario);
+    if (giornoCalendario !== 'tutti') partite = partite.filter(p => giornoPartita(p) === giornoCalendario);
+
+    const ordineGiorno = { ven: 0, sab: 1, dom: 2 };
+    partite.sort((a, b) => {
+      const ga = ordineGiorno[giornoPartita(a)] ?? 99;
+      const gb = ordineGiorno[giornoPartita(b)] ?? 99;
+      if (ga !== gb) return ga - gb;
+      const ora = p => (p.orario || '').split('· ')[1] || '';
+      return ora(a).localeCompare(ora(b));
+    });
+
+    if (partite.length === 0) {
+      document.getElementById('calendario-container').innerHTML = '<div class="stato">Nessuna partita trovata.</div>';
+      return;
+    }
+
+    const gruppi = {};
+    partite.forEach(p => {
+      const g = giornoPartita(p);
+      if (!gruppi[g]) gruppi[g] = [];
+      gruppi[g].push(p);
+    });
+
+    const labelGiorni = { ven: 'Venerdì 1 maggio', sab: 'Sabato 2 maggio', dom: 'Domenica 3 maggio' };
+
+    let html = '<div class="partite-list">';
+    ['ven','sab','dom'].forEach(g => {
+      if (!gruppi[g]) return;
+      html += `<div class="giorno-header">${labelGiorni[g]}</div>`;
+      gruppi[g].forEach(p => {
+        const score = p.giocata
+          ? `<span class="score">${p.puntiCasa} – ${p.puntiOspiti}</span>`
+          : `<span class="score pending">vs</span>`;
+        const badge = gironeCalendario === 'tutte'
+          ? `<span class="girone-badge">Girone ${p.girone}</span>` : '';
+        html += `
+          <div class="partita-card ${p.giocata ? 'giocata' : ''} ${p.daDefinire ? 'da-definire' : ''}">
+            <div class="squadra-home">${p.squadraCasa}</div>
+            <div class="risultato-center">
+              ${score}
+              <div class="orario-meta">${p.orario || ''}${p.campo ? ' · ' + p.campo : ''}</div>
+              ${badge}
+            </div>
+            <div class="squadra-away">${p.squadraOspite}</div>
+          </div>`;
+      });
+    });
+    html += '</div>';
+    document.getElementById('calendario-container').innerHTML = html;
+  }
+
+  // ── EVENTI ──────────────────────────────────────────────────
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  document.querySelectorAll('[data-girone-cl]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-girone-cl]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      gironeClassifica = parseInt(btn.dataset.gironeCl);
+      renderClassifica();
+    });
+  });
+
+  document.querySelectorAll('[data-girone-cal]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-girone-cal]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      gironeCalendario = btn.dataset.gironeCal;
+      renderCalendario();
+    });
+  });
+
+  document.querySelectorAll('[data-giorno]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-giorno]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      giornoCalendario = btn.dataset.giorno;
+      renderCalendario();
+    });
+  });
+
+  caricaDati();
+  setInterval(caricaDati, 30000);
+</script>
+</body>
+</html>
