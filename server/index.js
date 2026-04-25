@@ -18,7 +18,7 @@ function leggiDati() {
 }
 
 // Funzione di utilità per salvare i dati
-function salvaDatai(dati) {
+function salvaDati(dati) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(dati, null, 2));
 }
 
@@ -47,11 +47,6 @@ app.get('/api/gironi', (req, res) => {
 
 // PUT - aggiorna risultato di una partita
 app.put('/api/partite/:id', (req, res) => {
-  const { auth } = req.headers;
-
-  if (auth !== "ok-admin") {
-    return res.status(403).json({ errore: "Non autorizzato" });
-  }
   const dati = leggiDati();
   const id = parseInt(req.params.id);
   const { puntiCasa, puntiOspiti, quarti } = req.body;
@@ -66,9 +61,24 @@ app.put('/api/partite/:id', (req, res) => {
   partita.quarti = quarti;
   partita.giocata = true;
 
-  salvaDatai(dati);
+  salvaDati(dati);
   res.json(partita);
 });
+
+//PER RESETTARE TUTTO INDEX.HTML IN CASO DI ERRORE
+/*app.post('/api/reset', (req, res) => {
+  const dati = leggiDati();
+
+  dati.partite.forEach(p => {
+    p.puntiCasa = null;
+    p.puntiOspiti = null;
+    p.quarti = [];
+    p.giocata = false;
+  });
+
+  salvaDati(dati);
+  res.json({ ok: true, message: "Torneo resettato" });
+});*/
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
 app.get('/', (req, res) => {

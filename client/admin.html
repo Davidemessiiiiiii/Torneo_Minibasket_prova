@@ -88,6 +88,7 @@ async function carica() {
   partite = await res.json();
 
   const select = document.getElementById("partitaSelect");
+  select.innerHTML = "";
 
   partite.forEach(p => {
     const opt = document.createElement("option");
@@ -119,7 +120,7 @@ function caricaPartita() {
   document.getElementById("casa").value = p.puntiCasa ?? "";
   document.getElementById("ospite").value = p.puntiOspiti ?? "";
 
-  p.quarti.forEach((q, i) => {
+  (p.quarti || []).forEach((q, i) => {
     if (!q) return;
     document.getElementById("casa"+i).value = q.casa ?? "";
     document.getElementById("ospite"+i).value = q.ospite ?? "";
@@ -144,7 +145,8 @@ async function salva() {
   await fetch(API + "/api/partite/" + id, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "auth": "ok-admin"
     },
     body: JSON.stringify({
       puntiCasa,
@@ -154,9 +156,16 @@ async function salva() {
   });
 
   alert("Salvato!");
+  document.getElementById("casa").value = "";
+  document.getElementById("ospite").value = "";
+
+  for (let i = 0; i < 6; i++) {
+    document.getElementById("casa"+i).value = "";
+    document.getElementById("ospite"+i).value = "";
+  }
+  await carica();
 }
 
-carica();
 </script>
 
 </body>
