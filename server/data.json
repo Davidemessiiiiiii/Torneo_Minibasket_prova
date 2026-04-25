@@ -22,30 +22,526 @@
     }
   ],
   "partite": [
-    { "id": 1, "girone": "A", "squadraCasa": "Cuneo Arancione", "squadraOspite": "Amatori Savigliano", "orario": "Ven 01/05 · 10:00", "campo": "SportArea", "puntiCasa": 67, "puntiOspiti": 69, "giocata": true },
-    { "id": 2, "girone": "A", "squadraCasa": "Gerardiana Monza", "squadraOspite": "Polisportiva Gandhi", "orario": "Ven 01/05 · 12:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 3, "girone": "A", "squadraCasa": "Amatori Savigliano", "squadraOspite": "Ranabo Basket", "orario": "Ven 01/05 · 14:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 4, "girone": "A", "squadraCasa": "Ranabo Basket", "squadraOspite": "Gerardiana Monza", "orario": "Ven 01/05 · 17:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 5, "girone": "A", "squadraCasa": "Cuneo Arancione", "squadraOspite": "Gerardiana Monza", "orario": "Sab 02/05 · 09:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 6, "girone": "A", "squadraCasa": "Ranabo Basket", "squadraOspite": "Polisportiva Gandhi", "orario": "Sab 02/05 · 11:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 7, "girone": "A", "squadraCasa": "Gerardiana Monza", "squadraOspite": "Amatori Savigliano", "orario": "Sab 02/05 · 12:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 8, "girone": "A", "squadraCasa": "Cuneo Arancione", "squadraOspite": "Ranabo Basket", "orario": "Sab 02/05 · 15:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 9, "girone": "A", "squadraCasa": "Amatori Savigliano", "squadraOspite": "Polisportiva Gandhi", "orario": "Sab 02/05 · 16:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 10, "girone": "A", "squadraCasa": "Cuneo Arancione", "squadraOspite": "Polisportiva Gandhi", "orario": "Sab 02/05 · 19:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 11, "girone": "B", "squadraCasa": "Cuneo Blu", "squadraOspite": "Cavigal Nizza", "orario": "Ven 01/05 · 11:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 12, "girone": "B", "squadraCasa": "Basket Mondovì", "squadraOspite": "Pallacanestro Vado", "orario": "Ven 01/05 · 13:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 13, "girone": "B", "squadraCasa": "Cavigal Nizza", "squadraOspite": "Suzzara Fenice ASD", "orario": "Ven 01/05 · 15:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 14, "girone": "B", "squadraCasa": "Cuneo Blu", "squadraOspite": "Basket Mondovì", "orario": "Ven 01/05 · 16:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 15, "girone": "B", "squadraCasa": "Cuneo Blu", "squadraOspite": "Pallacanestro Vado", "orario": "Ven 01/05 · 18:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 16, "girone": "B", "squadraCasa": "Cuneo Blu", "squadraOspite": "Suzzara Fenice ASD", "orario": "Sab 02/05 · 10:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 17, "girone": "B", "squadraCasa": "Cavigal Nizza", "squadraOspite": "Pallacanestro Vado", "orario": "Sab 02/05 · 13:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 18, "girone": "B", "squadraCasa": "Basket Mondovì", "squadraOspite": "Suzzara Fenice ASD", "orario": "Sab 02/05 · 14:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 19, "girone": "B", "squadraCasa": "Cavigal Nizza", "squadraOspite": "Basket Mondovì", "orario": "Sab 02/05 · 17:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 20, "girone": "B", "squadraCasa": "Suzzara Fenice ASD", "squadraOspite": "Pallacanestro Vado", "orario": "Sab 02/05 · 18:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false },
-    { "id": 21, "girone": "A", "squadraCasa": "Partita da definire", "squadraOspite": "Partita da definire", "orario": "Dom 03/05 · 09:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false, "daDefinire": true },
-    { "id": 22, "girone": "A", "squadraCasa": "Partita da definire", "squadraOspite": "Partita da definire", "orario": "Dom 03/05 · 10:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false, "daDefinire": true },
-    { "id": 23, "girone": "A", "squadraCasa": "Partita da definire", "squadraOspite": "Partita da definire", "orario": "Dom 03/05 · 11:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false, "daDefinire": true },
-    { "id": 24, "girone": "A", "squadraCasa": "Partita da definire", "squadraOspite": "Partita da definire", "orario": "Dom 03/05 · 12:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false, "daDefinire": true },
-    { "id": 25, "girone": "A", "squadraCasa": "Partita da definire", "squadraOspite": "Partita da definire", "orario": "Dom 03/05 · 13:00", "campo": "SportArea", "puntiCasa": null, "puntiOspiti": null, "giocata": false, "daDefinire": true }
+    {
+      "id": 1,
+      "girone": "A",
+      "squadraCasa": "Cuneo Arancione",
+      "squadraOspite": "Amatori Savigliano",
+      "orario": "Ven 01/05 · 10:00",
+      "campo": "SportArea",
+      "puntiCasa": 16,
+      "puntiOspiti": 8,
+      "giocata": true,
+      "quarti": [
+        {
+          "casa": 12,
+          "ospite": 8
+        },
+        {
+          "casa": 7,
+          "ospite": 15
+        },
+        {
+          "casa": 18,
+          "ospite": 10
+        },
+        {
+          "casa": 9,
+          "ospite": 14
+        },
+        {
+          "casa": 11,
+          "ospite": 6
+        },
+        {
+          "casa": 8,
+          "ospite": 13
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "girone": "A",
+      "squadraCasa": "Gerardiana Monza",
+      "squadraOspite": "Polisportiva Gandhi",
+      "orario": "Ven 01/05 · 12:00",
+      "campo": "SportArea",
+      "puntiCasa": 18,
+      "puntiOspiti": 6,
+      "giocata": true,
+      "quarti": [
+        {
+          "casa": 12,
+          "ospite": 8
+        },
+        {
+          "casa": 47,
+          "ospite": 15
+        },
+        {
+          "casa": 18,
+          "ospite": 10
+        },
+        {
+          "casa": 9,
+          "ospite": 84
+        },
+        {
+          "casa": 16,
+          "ospite": 6
+        },
+        {
+          "casa": 100,
+          "ospite": 13
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "girone": "A",
+      "squadraCasa": "Amatori Savigliano",
+      "squadraOspite": "Ranabo Basket",
+      "orario": "Ven 01/05 · 14:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 4,
+      "girone": "A",
+      "squadraCasa": "Ranabo Basket",
+      "squadraOspite": "Gerardiana Monza",
+      "orario": "Ven 01/05 · 17:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 5,
+      "girone": "A",
+      "squadraCasa": "Cuneo Arancione",
+      "squadraOspite": "Gerardiana Monza",
+      "orario": "Sab 02/05 · 09:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 6,
+      "girone": "A",
+      "squadraCasa": "Ranabo Basket",
+      "squadraOspite": "Polisportiva Gandhi",
+      "orario": "Sab 02/05 · 11:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 7,
+      "girone": "A",
+      "squadraCasa": "Gerardiana Monza",
+      "squadraOspite": "Amatori Savigliano",
+      "orario": "Sab 02/05 · 12:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 8,
+      "girone": "A",
+      "squadraCasa": "Cuneo Arancione",
+      "squadraOspite": "Ranabo Basket",
+      "orario": "Sab 02/05 · 15:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 9,
+      "girone": "A",
+      "squadraCasa": "Amatori Savigliano",
+      "squadraOspite": "Polisportiva Gandhi",
+      "orario": "Sab 02/05 · 16:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 10,
+      "girone": "A",
+      "squadraCasa": "Cuneo Arancione",
+      "squadraOspite": "Polisportiva Gandhi",
+      "orario": "Sab 02/05 · 19:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 11,
+      "girone": "B",
+      "squadraCasa": "Cuneo Blu",
+      "squadraOspite": "Cavigal Nizza",
+      "orario": "Ven 01/05 · 11:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 12,
+      "girone": "B",
+      "squadraCasa": "Basket Mondovì",
+      "squadraOspite": "Pallacanestro Vado",
+      "orario": "Ven 01/05 · 13:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 13,
+      "girone": "B",
+      "squadraCasa": "Cavigal Nizza",
+      "squadraOspite": "Suzzara Fenice ASD",
+      "orario": "Ven 01/05 · 15:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 14,
+      "girone": "B",
+      "squadraCasa": "Cuneo Blu",
+      "squadraOspite": "Basket Mondovì",
+      "orario": "Ven 01/05 · 16:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 15,
+      "girone": "B",
+      "squadraCasa": "Cuneo Blu",
+      "squadraOspite": "Pallacanestro Vado",
+      "orario": "Ven 01/05 · 18:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 16,
+      "girone": "B",
+      "squadraCasa": "Cuneo Blu",
+      "squadraOspite": "Suzzara Fenice ASD",
+      "orario": "Sab 02/05 · 10:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 17,
+      "girone": "B",
+      "squadraCasa": "Cavigal Nizza",
+      "squadraOspite": "Pallacanestro Vado",
+      "orario": "Sab 02/05 · 13:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 18,
+      "girone": "B",
+      "squadraCasa": "Basket Mondovì",
+      "squadraOspite": "Suzzara Fenice ASD",
+      "orario": "Sab 02/05 · 14:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 19,
+      "girone": "B",
+      "squadraCasa": "Cavigal Nizza",
+      "squadraOspite": "Basket Mondovì",
+      "orario": "Sab 02/05 · 17:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 20,
+      "girone": "B",
+      "squadraCasa": "Suzzara Fenice ASD",
+      "squadraOspite": "Pallacanestro Vado",
+      "orario": "Sab 02/05 · 18:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 21,
+      "girone": "finale",
+      "label": "Da definire",
+      "squadraCasa": "Cavigal Nizza",
+      "squadraOspite": "Partita da definire",
+      "orario": "Dom 03/05 · 09:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "daDefinire": true,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 22,
+      "girone": "finale",
+      "label": "Da definire",
+      "squadraCasa": "Partita da definire",
+      "squadraOspite": "Partita da definire",
+      "orario": "Dom 03/05 · 10:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "daDefinire": true,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 23,
+      "girone": "finale",
+      "label": "Da definire",
+      "squadraCasa": "Partita da definire",
+      "squadraOspite": "Partita da definire",
+      "orario": "Dom 03/05 · 11:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "daDefinire": true,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 24,
+      "girone": "finale",
+      "label": "Da definire",
+      "squadraCasa": "Partita da definire",
+      "squadraOspite": "Partita da definire",
+      "orario": "Dom 03/05 · 12:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "daDefinire": true,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    {
+      "id": 25,
+      "girone": "finale",
+      "label": "Da definire",
+      "squadraCasa": "Partita da definire",
+      "squadraOspite": "Partita da definire",
+      "orario": "Dom 03/05 · 13:00",
+      "campo": "SportArea",
+      "puntiCasa": null,
+      "puntiOspiti": null,
+      "giocata": false,
+      "daDefinire": true,
+      "quarti": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ]
+    }
   ]
 }
