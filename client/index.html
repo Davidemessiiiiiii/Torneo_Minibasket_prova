@@ -247,6 +247,103 @@
       .orario-meta { font-size: 0.65rem; }
       .dettagli-panel.open { padding: 0.75rem 0.75rem; }
     }
+
+    .live-badge-card {
+      font-size: 0.68rem; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: #fff; background: #c0392b;
+      border-radius: 4px; padding: 0.15rem 0.5rem; display: inline-block;
+      animation: livepulse 1.5s infinite;
+    }
+    @keyframes livepulse { 0%,100% { opacity:1; } 50% { opacity:0.6; } }
+
+    .legenda-classifica {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .legenda-item {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .legenda-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      flex-shrink: 0;
+    }
+
+    .canestri-sub {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    .terminata-badge {
+      font-size: 0.68rem; font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); background: var(--mid);
+      border-radius: 4px; padding: 0.15rem 0.5rem; display: inline-block;
+    }
+
+    #modale-legenda {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999; padding: 1.5rem;
+    }
+    .modale-box {
+      background: var(--dark2); border: 1px solid var(--mid);
+      border-radius: 12px; padding: 1.75rem;
+      max-width: 420px; width: 100%; position: relative;
+    }
+    .modale-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: none; color: var(--muted);
+      font-size: 1.1rem; cursor: pointer; line-height: 1;
+    }
+    .modale-close:hover { color: var(--white); }
+    .modale-titolo {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 1.4rem; color: var(--white); margin-bottom: 1rem;
+    }
+    .modale-testo {
+      font-size: 0.9rem; color: var(--light); line-height: 1.5;
+      margin-bottom: 0.85rem;
+    }
+    .modale-regole {
+      background: var(--dark); border-radius: 8px;
+      padding: 0.85rem 1rem; margin-bottom: 0.85rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .modale-regola {
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.9rem; color: var(--light);
+    }
+    .modale-pt {
+      font-family: 'Barlow Condensed', sans-serif; font-weight: 800;
+      font-size: 1rem; min-width: 36px;
+    }
+    .modale-pt.arancio { color: var(--orange); }
+    .modale-pt.grigio  { color: var(--muted); }
+    .btn-legenda {
+      background: none; border: 1px solid var(--mid);
+      border-radius: 50%; width: 26px; height: 26px;
+      color: var(--muted); font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; display: inline-flex;
+      align-items: center; justify-content: center;
+      transition: all 0.15s; flex-shrink: 0;
+    }
+    .btn-legenda:hover { color: var(--white); border-color: var(--muted); }
   </style>
 </head>
 <body>
@@ -293,12 +390,15 @@
   <!-- CALENDARIO -->
   <div class="tab-panel" id="tab-calendario">
     <div class="filtri">
-      <div class="filtri-row">
-        <span class="filtri-label">Girone</span>
-        <button class="filter-btn active" data-girone-cal="tutte">Tutti</button>
-        <button class="filter-btn" data-girone-cal="A">Girone A</button>
-        <button class="filter-btn" data-girone-cal="B">Girone B</button>
-        <button class="filter-btn" data-girone-cal="finale">Finali</button>
+      <div class="filtri-row" style="justify-content: space-between; align-items: center;">
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; align-items:center;">
+          <span class="filtri-label">Girone</span>
+          <button class="filter-btn active" data-girone-cal="tutte">Tutti</button>
+          <button class="filter-btn" data-girone-cal="A">Girone A</button>
+          <button class="filter-btn" data-girone-cal="B">Girone B</button>
+          <button class="filter-btn" data-girone-cal="finale">Finali</button>
+        </div>
+        <button class="btn-legenda" onclick="document.getElementById('modale-legenda').style.display='flex'">?</button>
       </div>
       <div class="filtri-row">
         <span class="filtri-label">Giorno</span>
@@ -311,6 +411,23 @@
       <div class="stato"><div class="spinner"></div>Caricamento...</div>
     </div>
   </div>
+
+  <!-- MODALE LEGENDA -->
+<div id="modale-legenda" style="display:none" onclick="chiudiLegenda(event)">
+  <div class="modale-box">
+    <button class="modale-close" onclick="document.getElementById('modale-legenda').style.display='none'">✕</button>
+    <h2 class="modale-titolo">Come funziona il punteggio?</h2>
+    <p class="modale-testo">Ogni partita è divisa in <strong>6 quarti</strong>. Per ogni quarto viene assegnato un punteggio:</p>
+    <div class="modale-regole">
+      <div class="modale-regola"><span class="modale-pt arancio">3 pt</span><span>al vincitore del quarto</span></div>
+      <div class="modale-regola"><span class="modale-pt grigio">2 pt</span><span>a ciascuno in caso di pareggio</span></div>
+      <div class="modale-regola"><span class="modale-pt grigio">1 pt</span><span>al perdente del quarto</span></div>
+    </div>
+    <p class="modale-testo">La somma dei punti di tutti e 6 i quarti determina il <strong>risultato finale</strong> della partita (es. 15 – 9).</p>
+    <p class="modale-testo">Chi ha il punteggio più alto <strong>vince la partita</strong> e guadagna <strong>3 punti in classifica</strong>. Chi perde ne guadagna <strong>1</strong>.</p>
+    <p class="modale-testo" style="color:var(--muted); font-size:0.82rem;">I canestri reali (🏀) sono indicati sotto il risultato a titolo informativo.</p>
+  </div>
+</div>
 
 </main>
 
@@ -338,23 +455,83 @@
     }
   }
 
+  function calcolaPunteggioPartita(quarti) {
+  let casa = 0, ospite = 0;
+  (quarti || []).forEach(q => {
+    if (!q || q.casa == null || q.ospite == null) return;
+    if (q.casa > q.ospite)      { casa += 3; ospite += 1; }
+    else if (q.casa < q.ospite) { casa += 1; ospite += 3; }
+    else                         { casa += 2; ospite += 2; }
+  });
+  return { casa, ospite };
+}
+
+function calcolaPunteggioPartitaLive(quarti, quartoAttuale) {
+  let casa = 0, ospite = 0;
+  (quarti || []).forEach((q, i) => {
+    // Solo i quarti già conclusi, non quello in corso
+    if (i >= quartoAttuale - 1) return;
+    if (!q || q.casa == null || q.ospite == null) return;
+    if (q.casa > q.ospite)      { casa += 3; ospite += 1; }
+    else if (q.casa < q.ospite) { casa += 1; ospite += 3; }
+    else                         { casa += 2; ospite += 2; }
+  });
+  return { casa, ospite };
+}
+
+function calcolaCanestri(quarti) {
+  let casa = 0, ospite = 0;
+  (quarti || []).forEach(q => {
+    if (!q) return;
+    casa   += q.casa   ?? 0;
+    ospite += q.ospite ?? 0;
+  });
+  return { casa, ospite };
+}
+
+function chiudiLegenda(event) {
+  if (event.target === document.getElementById('modale-legenda')) {
+    document.getElementById('modale-legenda').style.display = 'none';
+  }
+}
+
   // ── CLASSIFICA ──────────────────────────────────────────────
   function calcolaClassifica(girone) {
     const squadre = girone.squadre.map(nome => ({ nome, g:0, v:0, p:0, pf:0, ps:0, pts:0 }));
     const lettera = girone.nome.slice(-1);
+
     datiPartite.filter(p => p.girone === lettera && p.giocata).forEach(p => {
       const casa   = squadre.find(s => s.nome === p.squadraCasa);
       const ospite = squadre.find(s => s.nome === p.squadraOspite);
       if (!casa || !ospite) return;
+
       casa.g++; ospite.g++;
-      casa.pf += p.puntiCasa; casa.ps += p.puntiOspiti;
-      ospite.pf += p.puntiOspiti; ospite.ps += p.puntiCasa;
-      if (p.puntiCasa > p.puntiOspiti) {
-        casa.v++; casa.pts += 3; ospite.p++; ospite.pts += 1;
+
+      // Canestri reali per PF/PS
+      const can = calcolaCanestri(p.quarti);
+      casa.pf   += can.casa;   casa.ps   += can.ospite;
+      ospite.pf += can.ospite; ospite.ps += can.casa;
+
+      // Punteggio partita dai quarti
+      const pt = calcolaPunteggioPartita(p.quarti);
+
+      // In caso di parità nei punti quarti, decide il totale canestri
+      let vinceCasa;
+      if (pt.casa !== pt.ospite) {
+        vinceCasa = pt.casa > pt.ospite;
       } else {
-        ospite.v++; ospite.pts += 3; casa.p++; casa.pts += 1;
+        vinceCasa = can.casa > can.ospite;
+      }
+
+      if (vinceCasa) {
+        casa.v++;   casa.pts += 3;
+        ospite.p++; ospite.pts += 1;
+      } else {
+        ospite.v++; ospite.pts += 3;
+        casa.p++;   casa.pts += 1;
       }
     });
+
     return squadre.sort((a, b) => b.pts - a.pts || (b.pf - b.ps) - (a.pf - a.ps));
   }
 
@@ -374,13 +551,18 @@
       </tr>`;
     }).join('');
     document.getElementById('classifica-container').innerHTML = `
-      <table class="classifica-table">
-        <thead><tr>
-          <th>Squadra</th><th>G</th><th>V</th><th>P</th>
-          <th class="col-pf">PF</th><th class="col-ps">PS</th><th class="col-diff">+/-</th><th>Pts</th>
-        </tr></thead>
-        <tbody>${rows}</tbody>
-      </table>`;
+    <div class="legenda-classifica">
+      <span class="legenda-item"><span class="legenda-dot"></span>Vittoria partita = 3 pt</span>
+      <span class="legenda-item"><span class="legenda-dot"></span>Sconfitta partita = 1 pt</span>
+      <span class="legenda-item"><span class="legenda-dot"></span>Il risultato si calcola dai quarti</span>
+    </div>
+    <table class="classifica-table">
+      <thead><tr>
+        <th>Squadra</th><th>G</th><th>V</th><th>P</th>
+        <th class="col-pf">PF</th><th class="col-ps">PS</th><th class="col-diff">+/-</th><th>Pts</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
   }
 
   // ── CALENDARIO ──────────────────────────────────────────────
@@ -447,6 +629,12 @@
   }
 
   function renderCalendario() {
+    // Salva quali pannelli sono aperti prima del re-render
+    const aperti = new Set(
+      [...document.querySelectorAll('.dettagli-panel.open')]
+        .map(el => el.id.replace('dettagli-', ''))
+    );
+
     let partite = [...datiPartite];
     if (gironeCalendario !== 'tutte') partite = partite.filter(p => p.girone === gironeCalendario);
     if (giornoCalendario !== 'tutti') partite = partite.filter(p => giornoPartita(p) === giornoCalendario);
@@ -479,15 +667,33 @@
       if (!gruppi[g]) return;
       html += `<div class="giorno-header">${labelGiorni[g]}</div>`;
       gruppi[g].forEach(p => {
-        const score = p.giocata
-          ? `<span class="score">${p.puntiCasa} – ${p.puntiOspiti}</span>`
-          : `<span class="score pending">vs</span>`;
+        let score;
+        if (p.giocata) {
+          const pt = calcolaPunteggioPartita(p.quarti);
+          const can = calcolaCanestri(p.quarti);
+          const scoreHtml = '<span class="score">' + pt.casa + ' – ' + pt.ospite + '</span>';
+          const canHtml = '<span class="canestri-sub">🏀 ' + can.casa + ' – ' + can.ospite + ' canestri</span>';
+          score = scoreHtml + canHtml;
+        } else if (p.live) {
+          const pt = calcolaPunteggioPartitaLive(p.quarti, p.quartoAttuale);
+          const can = calcolaCanestri(p.quarti);
+          const scoreHtml = '<span class="score">' + pt.casa + ' – ' + pt.ospite + '</span>';
+          const canHtml = '<span class="canestri-sub">🏀 ' + can.casa + ' – ' + can.ospite + ' canestri</span>';
+          score = scoreHtml + canHtml;
+        } else {
+          score = '<span class="score pending">vs</span>';
+        }
 
         let badge = '';
-        if (p.girone === 'finale') {
+        if (p.live) {
+          badge = `<span class="live-badge-card">🔴 LIVE · ${p.quartoAttuale}° Quarto</span>`;
+        } else if (p.girone === 'finale') {
           badge = `<span class="finale-badge">${p.label || 'Finale'}</span>`;
         } else if (gironeCalendario === 'tutte') {
           badge = `<span class="girone-badge">Girone ${p.girone}</span>`;
+        }
+        if (p.giocata) {
+          badge += ` <span class="terminata-badge">Terminata</span>`;
         }
 
         const mostraDettagli = p.giocata;
@@ -522,7 +728,16 @@
       });
     });
     html += '</div>';
+
     document.getElementById('calendario-container').innerHTML = html;
+
+    // Riapre i pannelli che erano aperti prima del refresh
+    aperti.forEach(id => {
+      const panel = document.getElementById('dettagli-' + id);
+      const btn = panel?.nextElementSibling?.querySelector('.btn-dettagli');
+      if (panel) panel.classList.add('open');
+      if (btn) btn.classList.add('open');
+    });
   }
 
   function toggleDettagli(btn, id) {
@@ -570,7 +785,7 @@
   });
 
   caricaDati();
-  setInterval(caricaDati, 30000);
+  setInterval(caricaDati, 2000);
 </script>
 </body>
 </html>

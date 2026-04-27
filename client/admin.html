@@ -4,80 +4,206 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin Torneo</title>
-
 <style>
-body {
-  font-family: Arial;
-  background: #1A1816;
-  color: white;
-  padding: 1rem;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Arial, sans-serif; background: #1A1816; color: white; padding: 1rem; }
+
+h2 { margin: 1rem 0 0.5rem; font-size: 1.1rem; color: #9A9088; text-transform: uppercase; letter-spacing: 0.05em; }
+
+input, select {
+  width: 100%; margin-bottom: 10px; padding: 12px;
+  font-size: 1rem; background: #2C2926; color: white;
+  border: 1px solid #3D3830; border-radius: 6px;
 }
 
-select, input {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  font-size: 1rem;
+.btn {
+  width: 100%; padding: 14px; border: none; color: white;
+  font-weight: bold; font-size: 1rem; border-radius: 6px;
+  cursor: pointer; margin-bottom: 8px;
+}
+.btn-orange { background: #E8601A; }
+.btn-green  { background: #2a7a2a; }
+.btn-gray   { background: #3D3830; }
+.btn-red    { background: #7a2a2a; }
+.btn-small  { font-size: 0.85rem; padding: 10px; }
+
+/* Scelta modalità */
+#scelta { display: none; }
+.modalita-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+.btn-modalita {
+  padding: 2rem 1rem; border: 2px solid #3D3830; background: #2C2926;
+  color: white; font-size: 1.1rem; font-weight: bold;
+  border-radius: 10px; cursor: pointer; text-align: center;
+}
+.btn-modalita:hover { border-color: #E8601A; }
+.btn-modalita .icon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+
+/* Pannelli */
+#panel-terminata, #panel-live { display: none; }
+
+.back-btn {
+  background: none; border: none; color: #9A9088;
+  font-size: 0.9rem; cursor: pointer; padding: 0.5rem 0;
+  margin-bottom: 1rem; display: flex; align-items: center; gap: 0.4rem;
+}
+.back-btn:hover { color: white; }
+
+/* Live scoreboard */
+.live-header {
+  background: #2C2926; border-radius: 10px;
+  padding: 1.25rem; margin-bottom: 1rem; text-align: center;
+}
+.live-badge {
+  display: inline-block; background: #c0392b;
+  color: white; font-size: 0.75rem; font-weight: bold;
+  letter-spacing: 0.1em; padding: 0.2rem 0.6rem;
+  border-radius: 4px; margin-bottom: 0.75rem;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.5; } }
+
+.quarto-label {
+  font-size: 0.85rem; color: #9A9088; margin-bottom: 0.5rem;
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.score-display {
+  font-size: 3rem; font-weight: bold; color: #E8601A;
+  letter-spacing: 0.1em; margin-bottom: 0.25rem;
+}
+.squadre-display {
+  font-size: 0.8rem; color: #9A9088;
+  display: flex; justify-content: space-between; padding: 0 0.5rem;
 }
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #E8601A;
-  border: none;
-  color: white;
-  font-weight: bold;
-  font-size: 1rem;
+/* Bottoni punti */
+.punteggio-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;
 }
+.squadra-col { display: flex; flex-direction: column; gap: 0.4rem; }
+.squadra-col-label {
+  text-align: center; font-size: 0.78rem; color: #9A9088;
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.25rem;
+}
+.btn-punto {
+  padding: 1rem; border: none; border-radius: 8px;
+  font-size: 1.1rem; font-weight: bold; color: white; cursor: pointer;
+}
+.btn-punto.plus  { background: #2a5a2a; }
+.btn-punto.plus:active { background: #3a8a3a; }
+.btn-punto.minus { background: #3D3830; font-size: 0.9rem; }
+.btn-punto.minus:active { background: #555; }
 
-.quarti {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5px;
+.quarti-mini {
+  display: flex; gap: 0.4rem; margin-bottom: 1rem; flex-wrap: wrap;
 }
-
-h2 {
-  margin-top: 20px;
+.quarto-chip {
+  flex: 1; min-width: 0; background: #2C2926;
+  border: 1px solid #3D3830; border-radius: 6px;
+  padding: 0.4rem 0.2rem; text-align: center; font-size: 0.78rem;
 }
+.quarto-chip.attivo { border-color: #E8601A; }
+.quarto-chip .chip-label { color: #9A9088; font-size: 0.65rem; }
+.quarto-chip .chip-score { font-weight: bold; color: white; }
+.quarto-chip.attivo .chip-score { color: #E8601A; }
 </style>
 </head>
-
 <body>
 
-    <div id="login">
-        <h2>Admin Login</h2>
-        <input type="password" id="pwd" placeholder="Password">
-        <button onclick="login()">Entra</button>
+<!-- LOGIN -->
+<div id="login">
+  <h2>Admin Login</h2>
+  <input type="password" id="pwd" placeholder="Password">
+  <button class="btn btn-orange" onclick="login()">Entra</button>
+</div>
+
+<!-- SCELTA MODALITÀ -->
+<div id="scelta">
+  <h2>Seleziona modalità</h2>
+  <div class="modalita-grid">
+    <button class="btn-modalita" onclick="mostraTerminata()">
+      <span class="icon">✅</span>
+      Partita terminata
+    </button>
+    <button class="btn-modalita" onclick="mostraLive()">
+      <span class="icon">🔴</span>
+      Live
+    </button>
+  </div>
+</div>
+
+<!-- PARTITA TERMINATA -->
+<div id="panel-terminata">
+  <button class="back-btn" onclick="torna()">← Indietro</button>
+  <h2>Partita terminata</h2>
+  <select id="partitaSelect"></select>
+
+  <h2>Punteggio finale</h2>
+  <input type="number" id="casa" placeholder="Punti casa">
+  <input type="number" id="ospite" placeholder="Punti ospite">
+
+  <h2>Quarti</h2>
+  <div id="quarti-terminata"></div>
+
+  <button class="btn btn-orange" onclick="salvaTerminata()">SALVA</button>
+</div>
+
+<!-- LIVE -->
+<div id="panel-live">
+  <button class="back-btn" onclick="torna()">← Indietro</button>
+  <h2>Seleziona partita</h2>
+  <select id="partitaLiveSelect" onchange="avviaLive()"></select>
+
+  <div id="live-board" style="display:none">
+    <div class="live-header">
+      <div class="live-badge">● LIVE</div>
+      <div class="quarto-label" id="live-quarto-label">1° Quarto</div>
+      <div class="score-display" id="live-score">0 – 0</div>
+      <div class="squadre-display">
+        <span id="live-nome-casa">Casa</span>
+        <span id="live-nome-ospite">Ospite</span>
+      </div>
     </div>
 
-    <div id="panel" style="display:none;">
-        <h1>Admin Torneo</h1>
+    <div class="quarti-mini" id="quarti-mini"></div>
 
-        <select id="partitaSelect"></select>
-
-        <h2>Punteggio finale</h2>
-        <input type="number" id="casa" placeholder="Punti casa">
-        <input type="number" id="ospite" placeholder="Punti ospite">
-
-        <h2>Quarti</h2>
-        <div class="quarti" id="quarti"></div>
-
-        <button onclick="salva()">SALVA</button>
+    <div class="punteggio-grid">
+      <div class="squadra-col">
+        <div class="squadra-col-label" id="label-casa-live">Casa</div>
+        <button class="btn-punto plus" onclick="aggiungi('casa', 3)">+3</button>
+        <button class="btn-punto plus" onclick="aggiungi('casa', 2)">+2</button>
+        <button class="btn-punto plus" onclick="aggiungi('casa', 1)">+1</button>
+        <button class="btn-punto minus" onclick="aggiungi('casa', -1)">-1 correggi</button>
+      </div>
+      <div class="squadra-col">
+        <div class="squadra-col-label" id="label-ospite-live">Ospite</div>
+        <button class="btn-punto plus" onclick="aggiungi('ospite', 3)">+3</button>
+        <button class="btn-punto plus" onclick="aggiungi('ospite', 2)">+2</button>
+        <button class="btn-punto plus" onclick="aggiungi('ospite', 1)">+1</button>
+        <button class="btn-punto minus" onclick="aggiungi('ospite', -1)">-1 correggi</button>
+      </div>
     </div>
 
+    <button class="btn btn-gray btn-small" onclick="quartoPrecedente()">⏮ Quarto precedente</button>
+    <button class="btn btn-gray btn-small" onclick="quartoSuccessivo()">⏭ Quarto successivo</button>
+    <button class="btn btn-red" onclick="terminaPartita()">🏁 Termina partita</button>
+  </div>
+</div>
 
 <script>
 const API = "https://torneominibasket-production.up.railway.app";
+const QUARTI_NOMI = ['1°','2°','3°','4°','5°','6°'];
+const MAX_QUARTI = 6;
 
 let partite = [];
+let liveState = null; // { partitaId, quartoAttuale, quarti: [{casa,ospite},...], totaleCasa, totaleOspite }
 
+// ── LOGIN ────────────────────────────────────────────────────
 async function login() {
   const pwd = document.getElementById("pwd").value;
-
   if (pwd.trim() === "cuneo2026") {
     document.getElementById("login").style.display = "none";
-    document.getElementById("panel").style.display = "block";
-    carica(); // avvia admin
+    await carica();
+    document.getElementById("scelta").style.display = "block";
   } else {
     alert("Password sbagliata");
   }
@@ -86,87 +212,204 @@ async function login() {
 async function carica() {
   const res = await fetch(API + "/api/partite");
   partite = await res.json();
+}
 
-  const select = document.getElementById("partitaSelect");
+// ── NAVIGAZIONE ──────────────────────────────────────────────
+function torna() {
+  document.getElementById("panel-terminata").style.display = "none";
+  document.getElementById("panel-live").style.display = "none";
+  document.getElementById("live-board").style.display = "none";
+  document.getElementById("scelta").style.display = "block";
+}
+
+// ── MODALITÀ TERMINATA ───────────────────────────────────────
+function mostraTerminata() {
+  document.getElementById("scelta").style.display = "none";
+  document.getElementById("panel-terminata").style.display = "block";
+  popolaSelect("partitaSelect");
+  creaQuartiTerminata();
+  caricaPartitaTerminata();
+  document.getElementById("partitaSelect").addEventListener("change", caricaPartitaTerminata);
+}
+
+function popolaSelect(id) {
+  const select = document.getElementById(id);
   select.innerHTML = "";
-
   partite.forEach(p => {
     const opt = document.createElement("option");
     opt.value = p.id;
-    opt.textContent = `${p.squadraCasa} vs ${p.squadraOspite}`;
+    opt.textContent = `${p.orario} · ${p.squadraCasa} vs ${p.squadraOspite}`;
     select.appendChild(opt);
   });
-
-  select.addEventListener("change", caricaPartita);
-  creaQuarti();
 }
 
-function creaQuarti() {
-  const container = document.getElementById("quarti");
-  container.innerHTML = "";
-
+function creaQuartiTerminata() {
+  const c = document.getElementById("quarti-terminata");
+  c.innerHTML = "";
   for (let i = 0; i < 6; i++) {
-    container.innerHTML += `
-      <input type="number" id="casa${i}" placeholder="Casa Q${i+1}">
-      <input type="number" id="ospite${i}" placeholder="Ospite Q${i+1}">
-    `;
+    c.innerHTML += `
+      <div style="display:grid;grid-template-columns:80px 1fr 1fr;gap:5px;margin-bottom:6px;align-items:center">
+        <span style="color:#9A9088;font-size:0.85rem">${QUARTI_NOMI[i]} Q</span>
+        <input type="number" id="qt-casa${i}" placeholder="Casa">
+        <input type="number" id="qt-ospite${i}" placeholder="Ospite">
+      </div>`;
   }
 }
 
-function caricaPartita() {
+function caricaPartitaTerminata() {
   const id = document.getElementById("partitaSelect").value;
   const p = partite.find(x => x.id == id);
-
   document.getElementById("casa").value = p.puntiCasa ?? "";
   document.getElementById("ospite").value = p.puntiOspiti ?? "";
-
   (p.quarti || []).forEach((q, i) => {
-    if (!q) return;
-    document.getElementById("casa"+i).value = q.casa ?? "";
-    document.getElementById("ospite"+i).value = q.ospite ?? "";
+    document.getElementById("qt-casa"+i).value = q?.casa ?? "";
+    document.getElementById("qt-ospite"+i).value = q?.ospite ?? "";
   });
 }
 
-async function salva() {
+async function salvaTerminata() {
   const id = document.getElementById("partitaSelect").value;
-
   const puntiCasa = parseInt(document.getElementById("casa").value);
   const puntiOspiti = parseInt(document.getElementById("ospite").value);
-
   const quarti = [];
-
   for (let i = 0; i < 6; i++) {
     quarti.push({
-      casa: parseInt(document.getElementById("casa"+i).value) || 0,
-      ospite: parseInt(document.getElementById("ospite"+i).value) || 0
+      casa: parseInt(document.getElementById("qt-casa"+i).value) || 0,
+      ospite: parseInt(document.getElementById("qt-ospite"+i).value) || 0
     });
   }
-
   await fetch(API + "/api/partite/" + id, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "auth": "ok-admin"
-    },
-    body: JSON.stringify({
-      puntiCasa,
-      puntiOspiti,
-      quarti
-    })
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ puntiCasa, puntiOspiti, quarti, giocata: true, live: false })
   });
-
   alert("Salvato!");
-  document.getElementById("casa").value = "";
-  document.getElementById("ospite").value = "";
-
-  for (let i = 0; i < 6; i++) {
-    document.getElementById("casa"+i).value = "";
-    document.getElementById("ospite"+i).value = "";
-  }
   await carica();
+  caricaPartitaTerminata();
 }
 
-</script>
+// ── MODALITÀ LIVE ────────────────────────────────────────────
+function mostraLive() {
+  document.getElementById("scelta").style.display = "none";
+  document.getElementById("panel-live").style.display = "block";
+  popolaSelect("partitaLiveSelect");
+}
 
+function avviaLive() {
+  const id = parseInt(document.getElementById("partitaLiveSelect").value);
+  const p = partite.find(x => x.id === id);
+
+  // Inizializza stato locale
+  liveState = {
+    partitaId: id,
+    quartoAttuale: p.quartoAttuale ?? 1,
+    quarti: Array.from({ length: MAX_QUARTI }, (_, i) => {
+      const q = p.quarti?.[i];
+      return { casa: q?.casa ?? 0, ospite: q?.ospite ?? 0 };
+    }),
+    nomeCasa: p.squadraCasa,
+    nomeOspite: p.squadraOspite,
+  };
+
+  document.getElementById("live-nome-casa").textContent = p.squadraCasa;
+  document.getElementById("live-nome-ospite").textContent = p.squadraOspite;
+  document.getElementById("label-casa-live").textContent = p.squadraCasa.split(' ')[0];
+  document.getElementById("label-ospite-live").textContent = p.squadraOspite.split(' ')[0];
+
+  document.getElementById("live-board").style.display = "block";
+  aggiornaUI();
+}
+
+function aggiungi(squadra, punti) {
+  const q = liveState.quartoAttuale - 1;
+  if (squadra === 'casa') {
+    liveState.quarti[q].casa = Math.max(0, liveState.quarti[q].casa + punti);
+  } else {
+    liveState.quarti[q].ospite = Math.max(0, liveState.quarti[q].ospite + punti);
+  }
+  aggiornaUI();
+  inviaLive();
+}
+
+function quartoPrecedente() {
+  if (liveState.quartoAttuale <= 1) {
+    alert("Sei già al primo quarto.");
+    return;
+  }
+  liveState.quartoAttuale--;
+  aggiornaUI();
+  inviaLive();
+}
+
+function quartoSuccessivo() {
+  if (liveState.quartoAttuale >= MAX_QUARTI) {
+    alert("Sei già all'ultimo quarto. Usa 'Termina partita'.");
+    return;
+  }
+  liveState.quartoAttuale++;
+  aggiornaUI();
+  inviaLive();
+}
+
+async function terminaPartita() {
+  if (!confirm("Confermi la fine della partita?")) return;
+  const totale = calcolaTotali();
+  await fetch(API + "/api/partite/" + liveState.partitaId, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      puntiCasa: totale.casa,
+      puntiOspiti: totale.ospite,
+      quarti: liveState.quarti,
+      giocata: true,
+      live: false,
+      quartoAttuale: liveState.quartoAttuale
+    })
+  });
+  alert("Partita terminata e salvata!");
+  await carica();
+  torna();
+}
+
+async function inviaLive() {
+  const totale = calcolaTotali();
+  await fetch(API + "/api/partite/" + liveState.partitaId, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      puntiCasa: totale.casa,
+      puntiOspiti: totale.ospite,
+      quarti: liveState.quarti,
+      giocata: false,
+      live: true,
+      quartoAttuale: liveState.quartoAttuale
+    })
+  });
+}
+
+function calcolaTotali() {
+  return liveState.quarti.reduce((acc, q) => ({
+    casa: acc.casa + (q.casa || 0),
+    ospite: acc.ospite + (q.ospite || 0)
+  }), { casa: 0, ospite: 0 });
+}
+
+function aggiornaUI() {
+  const totale = calcolaTotali();
+  const q = liveState.quartoAttuale;
+
+  document.getElementById("live-score").textContent = `${totale.casa} – ${totale.ospite}`;
+  document.getElementById("live-quarto-label").textContent = `${QUARTI_NOMI[q-1]} Quarto`;
+
+  // Chip quarti
+  const mini = document.getElementById("quarti-mini");
+  mini.innerHTML = liveState.quarti.map((qt, i) => `
+    <div class="quarto-chip ${i === q-1 ? 'attivo' : ''}">
+      <div class="chip-label">${QUARTI_NOMI[i]}Q</div>
+      <div class="chip-score">${qt.casa}-${qt.ospite}</div>
+    </div>
+  `).join('');
+}
+</script>
 </body>
 </html>
